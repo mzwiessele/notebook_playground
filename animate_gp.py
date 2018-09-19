@@ -126,6 +126,4 @@ def animate_kernel(fig, ax, X, mu, K, out, frames=200):
         dpi=150,
         savefig_kwargs={'transparent': False, 'facecolor': 'white'},
     )
-    jshtml = anim.to_jshtml()
-    from IPython.display import HTML
-    return HTML(jshtml) 
+    return anim
