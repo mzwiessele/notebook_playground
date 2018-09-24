@@ -60,7 +60,7 @@ def animation_matrix(N, n):
 
 def get_percs(X, mu, K):
     s = np.random.multivariate_normal(mu.squeeze(), K, size=(50000)).T
-    return np.percentile(s, np.linspace(0, 100, 75), overwrite_input=True, axis=1)
+    return np.percentile(s, np.linspace(0.01, 99.99, 75), overwrite_input=True, axis=1)
     
     return 
 
