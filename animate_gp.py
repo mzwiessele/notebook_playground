@@ -58,12 +58,10 @@ def animation_matrix(N, n):
     return r * exp_map_sphere(u, np.linspace(0.001, 2 * np.pi, n)[None] * t)
 
 
-def get_percs(X, mu, K):
+def get_percs(mu, K):
     s = np.random.multivariate_normal(mu.squeeze(), K, size=(50000)).T
     return np.percentile(s, np.linspace(0.01, 99.99, 75), overwrite_input=True, axis=1)
     
-    return 
-
 def create_empty_ax():
     fig, ax = plt.subplots(figsize=(4.2 * (16 / 9), 4.20))
     
@@ -79,7 +77,7 @@ def plot_data(ax, X, Y):
 def fill_grad(ax, X, mu, K):
     from GPy.plotting.matplot_dep.plot_definitions import MatplotlibPlots
     mat_plot = MatplotlibPlots()
-    mat_plot.fill_gradient(ax, X[:, 0], get_percs(X, mu, K), color='#687C8E', linewidth=0, alpha=1.)
+    mat_plot.fill_gradient(ax, X[:, 0], get_percs(mu, K), color='#687C8E', linewidth=0, alpha=1.)
 
 def animate_kernel(fig, ax, X, mu, K, out, frames=200):
     colors = ['#f7fbff',
@@ -105,7 +103,7 @@ def animate_kernel(fig, ax, X, mu, K, out, frames=200):
     def animate(i):
         for animatrix, line in zip(Rs, lines):
             # print y[:,i].shape, x.shape
-            line.set_data(X[:, 0], mu + L.dot(animatrix[:, [i]]))
+            line.set_data(X[:, 0], mu[:,[0]] + L.dot(animatrix[:, [i]]))
         return lines
     
     anim = animation.FuncAnimation(fig, animate, init_func=init,
